@@ -2,7 +2,7 @@
 @section('main_content')
     <div class="row justify-content-center">
         <div class="col-8 ">
-            <form action="{{ route('admin.attendance.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.attendance.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
 

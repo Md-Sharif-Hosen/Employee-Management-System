@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 class EmployeeController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function add()
     {
         //function_body
@@ -48,7 +53,7 @@ class EmployeeController extends Controller
 
 
 
-        $all_data=Employee::get();
+        $all_data = Employee::get();
         return view('Admin.Employee.view', compact('all_data'));
     }
 
@@ -57,14 +62,14 @@ class EmployeeController extends Controller
         //function_body
         $department = Department::get();
         $role = UserRole::get();
-        $all_data=Employee::get()->find($id);
-        return view('Admin.Employee.edit',compact('department','role','all_data'));
+        $all_data = Employee::get()->find($id);
+        return view('Admin.Employee.edit', compact('department', 'role', 'all_data'));
     }
 
     public function update()
     {
         //function_body
-        $record =Employee::find(request()->id);
+        $record = Employee::find(request()->id);
         $record->name = request('name');
         $record->roles_name = request('roles_name');
         $record->date_of_birth = request('date_of_birth');
@@ -75,16 +80,13 @@ class EmployeeController extends Controller
         $record->position = request('position');
         $record->salary = request('salary');
         $record->save();
-
         return redirect()->route('admin.employee.view');
     }
 
     public function delete($id)
     {
         //function_body
-        Employee::where('id',$id)->delete();
+        Employee::where('id', $id)->delete();
         return redirect()->route('admin.employee.view');
     }
-
-
 }

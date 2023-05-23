@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 class AttendanceController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function add()
     {
         //function_body
@@ -38,7 +43,7 @@ class AttendanceController extends Controller
         //function_body
 
         $attendance_data = Attendance::get();
-        return view('Admin.Employee_Attendance.view',compact('attendance_data'));
+        return view('Admin.Employee_Attendance.view', compact('attendance_data'));
     }
 
     public function edit($id)
@@ -46,29 +51,29 @@ class AttendanceController extends Controller
         //function_body
         $department = Department::get();
         $employee = Employee::get();
-        $attend_view=Attendance::get()->find($id);
-        return view('Admin.Employee_Attendance.edit',compact('attend_view','department','employee'));
+        $attend_view = Attendance::get()->find($id);
+        return view('Admin.Employee_Attendance.edit', compact('attend_view', 'department', 'employee'));
     }
     public function update()
     {
         //function_body
-      $attend_update= Attendance::find(request()->id);
-      $attend_update->employee_name = request('employee_name');
-      $attend_update->department = request('department');
-      $attend_update->post = request('post');
-      $attend_update->date = request('date');
-      $attend_update->check_in_time = request('check_in_time');
-      $attend_update->check_out_time = request('check_out_time');
-      $attend_update->work_hours = request('work_hours');
-      $attend_update->save();
+        $attend_update = Attendance::find(request()->id);
+        $attend_update->employee_name = request('employee_name');
+        $attend_update->department = request('department');
+        $attend_update->post = request('post');
+        $attend_update->date = request('date');
+        $attend_update->check_in_time = request('check_in_time');
+        $attend_update->check_out_time = request('check_out_time');
+        $attend_update->work_hours = request('work_hours');
+        $attend_update->save();
 
-      return redirect()->route('admin.employee.view');
-
+     
+        return redirect()->route('admin.employee.view');
     }
     public function delete($id)
     {
         //function_body
-     Attendance::where('id',$id)->delete();
-     return redirect()->route('admin.attendance.view');
+        Attendance::where('id', $id)->delete();
+        return redirect()->route('admin.attendance.view');
     }
 }

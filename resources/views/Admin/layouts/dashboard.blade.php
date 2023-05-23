@@ -210,6 +210,9 @@
 
     </div>
 
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 
     <script src="{{ asset('contents/Admin/assets') }}/js/jquery-3.6.0.min.js"></script>
 
