@@ -20,7 +20,7 @@ class AttendenceSeeder extends Seeder
             'date'=>'1998-01-06',
             'check_in_time'=>'10:00:00',
             'check_out_time'=>'15:00:00',
-            'work_hours'=>8
+            'work_hours'=>"8"
 
         ]);
     }

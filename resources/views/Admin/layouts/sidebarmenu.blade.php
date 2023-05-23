@@ -24,16 +24,21 @@
                         <li><a href="edit-student.html">Student Edit</a></li>
                     </ul>
                 </li> --}}
+                <li class="">
+                    <a href="{{ route('admin.attendance.add') }}"><i class="fas fa-chalkboard"></i> <span> Employees Attendance</span> </a>
+                </li>
                 <li class="submenu">
-                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Employees</span> <span
+                    <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Employees Document</span> <span
                             class="menu-arrow"></span></a>
                     <ul>
 
                         <li><a href="{{ route('admin.employee.view') }}">Employee View</a></li>
                         <li><a href="{{ route('admin.employee.add') }}">Employee Add</a></li>
+                        <li><a href="{{ route('admin.attendance.view') }}">Employee Attendance</a></li>
 
                     </ul>
                 </li>
+
                 {{-- <li class="submenu">
                     <a href="#"><i class="fas fa-building"></i> <span> Departments</span> <span
                             class="menu-arrow"></span></a>
