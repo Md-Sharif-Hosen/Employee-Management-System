@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -21,6 +22,11 @@ class AttendanceController extends Controller
         //function_body
         $department = Department::get();
         $employee = Employee::get();
+        // $data =Settings::first();
+        // $cc = $data->clock_comment;
+        // $tz = $data->time_zone;
+        // $tf = $data->time_format;
+        // $rfid = $data->rfid;
         return view('Admin.Employee_Attendance.add', compact('department', 'employee'));
     }
 
@@ -67,7 +73,7 @@ class AttendanceController extends Controller
         $attend_update->work_hours = request('work_hours');
         $attend_update->save();
 
-     
+
         return redirect()->route('admin.employee.view');
     }
     public function delete($id)
