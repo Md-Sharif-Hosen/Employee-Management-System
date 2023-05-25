@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Settings;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -17,16 +18,59 @@ class AttendanceController extends Controller
         $this->middleware('auth');
     }
 
+    public function attend()
+    {
+        $check_in = Attendance::whereDate('date', Carbon::now()->toDateString())
+            ->where('check_in_time', '!=', 'null')
+            ->where('employee_id', auth()->user()->id)
+            ->first();
+        $checkout = Attendance::whereDate('date', Carbon::now()->toDateString())
+            ->where('check_out_time', '!=', 'null')
+            ->where('employee_id', auth()->user()->id)
+            ->first();
+        return view('Admin.attend', [
+            'check_in' => $check_in,
+            'checkout' => $checkout,
+        ]);
+    }
+
+    public function attend_submit()
+    {
+        $attendence = Attendance::whereDate('date', Carbon::now()->toDateString())
+            ->where('check_in_time', '!=', 'null')
+            ->where('employee_id', auth()->user()->id)
+            ->first();
+        if (!$attendence) {
+            $attendence = new Attendance();
+            $attendence->employee_id = auth()->user()->id;
+            $attendence->date = Carbon::now()->toDateTimeString();
+            $attendence->check_in_time = Carbon::now()->toTimeString();
+            $attendence->save();
+            return redirect()->back();
+        }
+
+        $attendence = Attendance::whereDate('date', Carbon::now()->toDateString())
+            ->where('check_in_time', '!=', 'null')
+            ->where('check_out_time', '=', 'null')
+            ->where('employee_id', auth()->user()->id)
+            ->first();
+        if (!$attendence) {
+            $attendence = new Attendance();
+            $attendence->employee_id = auth()->user()->id;
+            $attendence->date = Carbon::now()->toDateTimeString();
+            $attendence->check_out_time = Carbon::now()->toTimeString();
+            $attendence->save();
+            return redirect()->back();
+        }
+
+        return redirect()->back();
+    }
     public function add()
     {
         //function_body
         $department = Department::get();
         $employee = Employee::get();
-        // $data =Settings::first();
-        // $cc = $data->clock_comment;
-        // $tz = $data->time_zone;
-        // $tf = $data->time_format;
-        // $rfid = $data->rfid;
+
         return view('Admin.Employee_Attendance.add', compact('department', 'employee'));
     }
 
@@ -35,6 +79,7 @@ class AttendanceController extends Controller
         //function_body
         $attendance = new Attendance();
         $attendance->employee_name = request('employee_name');
+        $attendance->employee_id= request('employee_id');
         $attendance->department = request('department');
         $attendance->post = request('post');
         $attendance->date = request('date');

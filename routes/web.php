@@ -31,6 +31,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'Adm
     Route::get('employee/delete/{id}', 'EmployeeController@delete')->name('admin.employee.delete');
 
     ///Employee Attendance
+   Route::get('employee/attend','AttendanceController@attend');
+   Route::post('employee/attend-submit','AttendanceController@attend_submit');
    Route::get('employee/attendence','AttendanceController@add')->name('admin.attendance.add');
    Route::post('employee/attendence/store','AttendanceController@store')->name('admin.attendance.store');
    Route::get('employee/attendence/view','AttendanceController@view')->name('admin.attendance.view');
