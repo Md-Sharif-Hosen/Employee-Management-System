@@ -2,11 +2,24 @@
 @section('main_content')
     <div class="row justify-content-center">
         <div class="col-6">
+            @if (session()->get('created'))
+                <div class="alert alert-success">{{ session()->get('created') }}</div>
+                <script defer>
+                    Swal.fire({
+                        title: 'Thanks',
+                        text: '{{ session()->get("created") }}',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                    })
+                </script>
+            @endif
+
             <form action="{{ route('admin.employee.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-header">
                         <h2>Employee Add</h2>
+                        
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -88,6 +101,9 @@
                 </div>
 
             </form>
+            {{-- @php
+                dd(session()->all());
+            @endphp --}}
         </div>
     </div>
 @endsection

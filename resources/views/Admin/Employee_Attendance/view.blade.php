@@ -6,6 +6,20 @@
                 <div class="card-header">
                     <h2>Employee Attendance</h2>
                 </div>
+                @if (session()->get('Success'))
+                    {{-- <div class="alert alert-danger">
+                    {{ session()->get('Success') }}
+
+                </div> --}}
+                    <script>
+                        Swal.fire({
+                            title: 'thanks!',
+                            text: '{{ session()->get('Success') }} ',
+                            icon: 'error',
+                            confirmButtonText: 'Cool'
+                        })
+                    </script>
+                @endif
 
                 <div class="card-body">
                     <div class='table-responsive'>
@@ -45,9 +59,12 @@
                                         <td>{{ $value->check_out_time }}</td>
                                         <td>{{ $value->work_hours }}</td>
                                         <td>
-                                            <a href="{{ route('admin.attendance.view') }}" class="btn btn-sm btn-info">View</a>
-                                            <a href="{{ route('admin.attendance.edit', $value->id) }}" class="btn btn-sm btn-warning mx-2">Edit</a>
-                                            <a href="{{ route('admin.attendance.delete', $value->id) }}" class="btn btn-sm btn-danger mx-2">Delete</a>
+                                            <a href="{{ route('admin.attendance.view') }}"
+                                                class="btn btn-sm btn-info">View</a>
+                                            <a href="{{ route('admin.attendance.edit', $value->id) }}"
+                                                class="btn btn-sm btn-warning mx-2">Edit</a>
+                                            <a href="{{ route('admin.attendance.delete', $value->id) }}"
+                                                class="btn btn-sm btn-danger mx-2">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -24,13 +24,38 @@
     <link rel="stylesheet" href="{{ asset('contents/Admin/assets') }}/plugins/fontawesome/css/all.min.css">
 
     <link rel="stylesheet" href="{{ asset('contents/Admin/assets') }}/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+    </script>
 </head>
 
 <body>
 
+    @if (session()->get('Success'))
+        <script defer>
+            Toast.fire({
+                icon: 'Success',
+                title: '{{ session()->get("Success") }}'
+            })
+        </script>
+    @endif
+
     <div class="main-wrapper">
+
 
         <div class="header">
 
@@ -210,9 +235,7 @@
 
     </div>
 
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ asset('contents/Admin/assets') }}/js/jquery-3.6.0.min.js"></script>
 

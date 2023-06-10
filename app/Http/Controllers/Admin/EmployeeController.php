@@ -26,6 +26,8 @@ class EmployeeController extends Controller
 
     public function store(request $request)
     {
+
+
         //function_body
         $record = new Employee();
         $record->name = request('name');
@@ -39,7 +41,7 @@ class EmployeeController extends Controller
         $record->salary = request('salary');
         $record->save();
 
-        return redirect()->route('admin.employee.view');
+        return redirect()->back()->with('created','Created successfully');
     }
 
     public function view()
@@ -53,7 +55,7 @@ class EmployeeController extends Controller
 
 
 
-        $all_data = Employee::get();
+        $all_data = Employee::paginate(2);
         return view('Admin.Employee.view', compact('all_data'));
     }
 
@@ -87,6 +89,6 @@ class EmployeeController extends Controller
     {
         //function_body
         Employee::where('id', $id)->delete();
-        return redirect()->route('admin.employee.view');
+        return redirect()->back()->with('Success','Successfully deleted');
     }
 }

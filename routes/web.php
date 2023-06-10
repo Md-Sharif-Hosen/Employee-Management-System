@@ -21,6 +21,20 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+///User
+Route::group( ['prefix'=>'user','middleware'=>['auth'] ],function(){
+Route::get('/create','UserController@create')->name('user.create');
+Route::post('/store','UserController@store')->name('user.store');
+Route::get('/all','UserController@all')->name('user.all');
+Route::get('/view','UserController@view')->name('user.view');
+});
+
+
+//session
+Route::get('/session/get','SessionController@getsessiondata');
+Route::get('/session/store','SessionController@storesessiondata');
+Route::get('/session/destroy','SessionController@destorysessiondata');
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
     //Employee Add
     Route::get('employee/add', 'EmployeeController@add')->name('admin.employee.add');

@@ -3,8 +3,9 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex flex-wrap gap-2 justify-content-between">
                     <h2>Employee list</h2>
+                    <a class="btn btn-outline-info" href="{{ route('admin.employee.add') }}">Add Employee</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -46,7 +47,7 @@
                                         <td>
                                             <a href="" class="btn btn-sm btn-info">Show</a>
                                             <a href="{{ route('admin.employee.edit',$item->id) }}" class="btn btn-sm btn-warning mx-2">Edit</a>
-                                            <a href="{{ route('admin.employee.delete',$item->id ) }}" class="btn btn-sm btn-danger">Delete</a>
+                                            <a class="btn btn-sm btn-danger" onclick="return confirm('Do you Want to Delete')" href="{{ route('admin.employee.delete',$item->id ) }}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -54,10 +55,14 @@
 
                         </table>
 
+                        {{$all_data->links()}}
+
                     </div>
                 </div>
+
             </div>
         </div>
 
     </div>
+
 @endsection
