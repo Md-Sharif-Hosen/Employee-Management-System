@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\ElseIf_;
 
 class UserSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class UserSeeder extends Seeder
             'role_id'=>1,
             'phone_number'=>'01728737552',
             'email'=>'admin@gmail.com',
+            'status'=>1,
             'password'=>Hash::make('12345678')
 
 
@@ -31,11 +33,15 @@ class UserSeeder extends Seeder
             'role_id'=>2,
             'phone_number'=>'01721120462',
             'email'=>'sharifkhan762@gmail.com',
+            'status'=>1,
             'password'=>Hash::make('12345678')
 
 
         ]);
-        User::factory()->count(20)->create();
+
+
+
+        User::factory()->count(10)->create();
 
     }
 }

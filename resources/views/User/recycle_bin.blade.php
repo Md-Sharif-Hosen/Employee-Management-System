@@ -33,19 +33,20 @@
             </form>
         </div>
         @if (session()->get('Deleted'))
-        <script>
-
-            Toast.fire({
-            icon: 'success',
-            title: '{{session()->get('Deleted')}}'
-            })
-        </script>
+            <script>
+                Toast.fire({
+                    icon: 'success',
+                    title: '{{ session()->get('Deleted') }}'
+                })
+            </script>
         @endif
         <div class="col-12">
             <div class="table-responsibe">
-                <h1 class="text-center">All User</h1>
-                <div class="text-end my-2" >
-                  <a class="btn btn-outline-warning " href="{{ route('user.recycle_bin') }}"><span style="color: red">RecycleBin Data</span> </a>
+                <h1 class="text-center">Recycle Bin All Data</h1>
+                <div class="text-end">
+                    <a href="{{ route('user.all') }}" class="btn btn-outline-success"><span
+                            style="color: rgb(128, 58, 0)">
+                            <-Back</span></a>
                 </div>
                 <table class="table table-striped table-dark">
                     <thead>
@@ -77,8 +78,8 @@
                                 <td>{{ $data->password }}</td>
                                 <td>
                                     <a class="btn btn-info" href="{{ route('user.view', $data->id) }}">view</a>
-                                    <a class="btn btn-danger" onclick="return confirm('Do you want to delete') "
-                                        href="{{ route('user.delete', $data->id) }}">Delete</a>
+                                    <a class="btn btn-danger" onclick="return confirm('Do you want to Restore') "
+                                        href="{{ route('user.restore', $data->id) }}">Restore</a>
 
                                 </td>
 

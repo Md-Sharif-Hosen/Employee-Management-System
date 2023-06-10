@@ -46,7 +46,7 @@
                         @csrf
                         <div class="form-control">
                             <label for="">Name</label>
-                            <input class="form-control" type="text" name="username">
+                            <input class="form-control" value="{{ old('username') }}" type="text" name="username">
                             @error('username')
                                 <div class="alert alert-danger">
                                   {{ $message }}
@@ -55,16 +55,10 @@
                         </div>
                         <div class="form-control">
                             <label for="">User Role</label>
-                            <select class="form-control" name="role_id" id="">
+                            <select class="form-control" value="{{ old('role_id') }}" name="role_id" id="role_id">
                                 <option value="">Select</option>
-                                @foreach ($user as $item)
-                                    <option value="{{ $item->id }}">
-                                        @if ($item->role)
-                                            {{ $item->role->title }}
-                                        @else
-                                        @endif
-
-                                    </option>
+                                @foreach ($role as $item)
+                                    <option value="{{ $item->id }}" {{ old('role_id') == $item->id ? 'selected' :''}}>{{ $item->title }}</option>
                                 @endforeach
                             </select>
                             @error('role_id')
@@ -75,7 +69,7 @@
                         </div>
                         <div class="form-control">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email">
+                            <input type="email" value="{{ old('email') }}" class="form-control" name="email">
                             @error('email')
                             <div class="alert alert-danger">
                               {{ $message }}
@@ -84,7 +78,7 @@
                         </div>
                         <div class="form-control">
                             <label for="">Photo</label>
-                            <input class="form-control"type="file" accept="image/*" name="photo">
+                            <input class="form-control" type="file" value="{{ old('photo') }}" accept="image/*" name="photo">
                             @error('photo')
                             <div class="alert alert-danger">
                               {{ $message }}
@@ -93,7 +87,7 @@
                         </div>
                         <div class="form-control">
                             <label for="">Password</label>
-                            <input class="form-control" type="text" name="password" id="">
+                            <input class="form-control" type="text" value="{{ old('password') }}" name="password" >
                             @error('password')
                             <div class="alert alert-danger">
                               {{ $message }}

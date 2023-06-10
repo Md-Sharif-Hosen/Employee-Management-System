@@ -26,7 +26,13 @@ Route::group( ['prefix'=>'user','middleware'=>['auth'] ],function(){
 Route::get('/create','UserController@create')->name('user.create');
 Route::post('/store','UserController@store')->name('user.store');
 Route::get('/all','UserController@all')->name('user.all');
-Route::get('/view','UserController@view')->name('user.view');
+Route::get('/view/{id}','UserController@view')->name('user.view');
+Route::get('/delete/{id}','UserController@delete')->name('user.delete');
+Route::get('/recycle_bin','UserController@recycle_bin')->name('user.recycle_bin');
+Route::get('/restore/{id}','UserController@restore')->name('user.restore');
+
+Route::get('/user/search','UserController@search')->name('user.search');
+
 });
 
 
