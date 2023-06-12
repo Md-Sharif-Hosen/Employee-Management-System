@@ -12,6 +12,12 @@
 
 <body>
     <div class="container justify-content-center">
+        <div class="input-group justify-content-end">
+            <form class="my-2" type="get" action="{{ route('user.search') }}">
+                <input type="search" placeholder="search" name="query" class=" form-control">
+                <button class="btn btn-success" type="submit"> Search</button>
+            </form>
+        </div>
         <div class="col-6">
             <div class="card">
                 <div class="card-header">

@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    @if (count($user_data_all)>0)
 
     <div class="container justify-content-center">
         <div class="d-flex gap-2 justify-content-between">
@@ -73,6 +74,10 @@
             </div>
         </div>
     </div>
+    @else
+    <h3 class="text-center"> there is no data here</h3>
+    @endif
+
 
 </body>
 

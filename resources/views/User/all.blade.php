@@ -25,9 +25,32 @@
 </head>
 
 <body>
+    {{-- <div class="container" >
+        <form type="get" class="d-flex gap-lg-2 justify-content-center my-3" action="{{ route('user.all_user_search') }}">
+            <div>
+                <label for="">Form</label>
+             <input type="date" name="form_date">
+            </div>
+            <div>
+                <label for="">To</label>
+                <input type="date" name="to_date">
+            </div>
+            <button type="submit">submit</button>
+        </form>
+
+    </div> --}}
+
     <div class="container justify-content-center">
         <div class="input-group justify-content-end">
             <form class="my-2" type="get" action="{{ route('user.search') }}">
+                <div>
+                    <label for="">Form</label>
+                 <input type="date" class="form-control" name="form_date">
+                </div>
+                <div>
+                    <label for="">To</label>
+                    <input type="date" class="form-control" name="to_date">
+                </div>
                 <input type="search" placeholder="search" name="query" class=" form-control">
                 <button class="btn btn-success" type="submit"> Search</button>
             </form>
@@ -44,8 +67,14 @@
         <div class="col-12">
             <div class="table-responsibe">
                 <h1 class="text-center">All User</h1>
-                <div class="text-end my-2" >
-                  <a class="btn btn-outline-warning " href="{{ route('user.recycle_bin') }}"><span style="color: red">RecycleBin Data</span> </a>
+                <div class="d-flex justify-content-between">
+
+                    <div class="text-start my-2">
+                        <a class="btn btn-outline-info"  href="{{ route('user.create') }}">Create</a>
+                    </div>
+                    <div class="text-end my-2" >
+                      <a class="btn btn-outline-warning " href="{{ route('user.recycle_bin') }}"><span style="color: red">RecycleBin Data</span> </a>
+                    </div>
                 </div>
                 <table class="table table-striped table-dark">
                     <thead>
@@ -55,7 +84,7 @@
                         <th>Email</th>
                         <th>Status</th>
                         <th>Photo</th>
-                        <th>Password</th>
+                        {{-- <th>Password</th> --}}
 
                     </thead>
                     <tbody>
@@ -72,11 +101,12 @@
                                 {{-- @dd($data->photo) --}}
                                 <td>{{ $data->status }}</td>
                                 <td>
-                                    <img src="/{{ $data->photo }}" height="100" width="100">
+                                    <img src="{{ asset($data->photo) }}" height="100" width="100">
                                 </td>
-                                <td>{{ $data->password }}</td>
+                                {{-- <td>{{ $data->password }}</td> --}}
                                 <td>
                                     <a class="btn btn-info" href="{{ route('user.view', $data->id) }}">view</a>
+                                    <a class="btn btn-outline-info" href="{{ route('user.edit',$data->id) }}">Edit</a>
                                     <a class="btn btn-danger" onclick="return confirm('Do you want to delete') "
                                         href="{{ route('user.delete', $data->id) }}">Delete</a>
 

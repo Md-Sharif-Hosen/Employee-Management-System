@@ -14,7 +14,7 @@
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3000,
+            timer: 200,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -32,14 +32,30 @@
                 <button class="btn btn-success" type="submit"> Search</button>
             </form>
         </div>
-        @if (session()->get('Deleted'))
+          @if (session()->get('restore'))
+          <script>
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session()->get('restore') }}'
+            })
+        </script>
+          @else
+          <script>
+            Toast.fire({
+                icon: 'error',
+                title: 'Restore not complete'
+            })
+        </script>
+          @endif
+
+        {{-- @if (session()->get('restore'))
             <script>
                 Toast.fire({
                     icon: 'success',
-                    title: '{{ session()->get('Deleted') }}'
+                    title: '{{ session()->get('restore') }}'
                 })
             </script>
-        @endif
+        @endif --}}
         <div class="col-12">
             <div class="table-responsibe">
                 <h1 class="text-center">Recycle Bin All Data</h1>
@@ -48,6 +64,8 @@
                             style="color: rgb(128, 58, 0)">
                             <-Back</span></a>
                 </div>
+
+
                 <table class="table table-striped table-dark">
                     <thead>
                         <th>ID</th>
@@ -56,7 +74,7 @@
                         <th>Email</th>
                         <th>Status</th>
                         <th>Photo</th>
-                        <th>Password</th>
+                        {{-- <th>Password</th> --}}
 
                     </thead>
                     <tbody>
@@ -75,7 +93,7 @@
                                 <td>
                                     <img src="/{{ $data->photo }}" height="100" width="100">
                                 </td>
-                                <td>{{ $data->password }}</td>
+                                {{-- <td>{{ $data->password }}</td> --}}
                                 <td>
                                     <a class="btn btn-info" href="{{ route('user.view', $data->id) }}">view</a>
                                     <a class="btn btn-danger" onclick="return confirm('Do you want to Restore') "

@@ -27,11 +27,14 @@ Route::get('/create','UserController@create')->name('user.create');
 Route::post('/store','UserController@store')->name('user.store');
 Route::get('/all','UserController@all')->name('user.all');
 Route::get('/view/{id}','UserController@view')->name('user.view');
-Route::get('/delete/{id}','UserController@delete')->name('user.delete');
+Route::get('/edit/{id}','UserController@edit')->name('user.edit');
+Route::post('/update/{id}','UserController@update')->name('user.update');
+Route::get('/delete','UserController@delete')->name('user.delete');
 Route::get('/recycle_bin','UserController@recycle_bin')->name('user.recycle_bin');
 Route::get('/restore/{id}','UserController@restore')->name('user.restore');
 
 Route::get('/user/search','UserController@search')->name('user.search');
+Route::get('/user/user_data','UserController@all_user_search')->name('user.all_user_search');
 
 });
 
