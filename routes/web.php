@@ -21,9 +21,9 @@ Route::get('/', function () {
 Route::group( ['prefix'=>'bus' ],function(){
 // Route::get('/create','BusController@create');
 // Route::get('/store','BusController@store');
-Route::get('/view','BusController@view')->name('bus.view');
-Route::get('/all/search','BusController@search')->name('bus.search');
-Route::get('/all','BusController@view');
+// Route::get('/view','BusController@view')->name('bus.view');
+Route::get('/all/search','BusController@search')->name('bus.search')->middleware('bus');
+Route::get('/all','BusController@view')->name('bus.view');
 // Route::get('/edit/{id}','BusController@edit');
 // Route::get('/update/{id}','BusController@update');
 // Route::get('/delete','BusController@delete');

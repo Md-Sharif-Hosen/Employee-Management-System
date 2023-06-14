@@ -14,12 +14,8 @@
             {{-- <div class="d-flex gap-lg-2"> --}}
 
                 <div>
-                    <label for="">Form</label>
+                    <label for="">Availabe Bus</label>
                  <input type="time" class="form-control" name="bus_in">
-                </div>
-                <div>
-                    <label for="">To</label>
-                    <input type="time" class="form-control" name="bus_out">
                 </div>
 
                 <button class="btn btn-success btn-sm"  type="submit">Search</button>

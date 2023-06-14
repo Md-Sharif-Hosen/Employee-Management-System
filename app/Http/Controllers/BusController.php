@@ -58,12 +58,16 @@ class BusController extends Controller
     public function search()
     {
         //function_body
+        // $bus_in=request('bus_in');
+        // $bus_out=request('bus_out');
         $bus_in=request('bus_in');
-        $bus_out=request('bus_out');
-
+        // $bus_data=Bus::with('driver_info')
+        // ->where('bus_start_time',$bus_in)
+        // ->where('bus_out_time',$bus_out)
+        // ->get();
         $bus_data=Bus::with('driver_info')
-        ->where('bus_start_time',$bus_in)
-        ->where('bus_out_time',$bus_out)
+        ->whereTime('bus_start_time','<',[$bus_in])
+        ->whereTime('bus_out_time','>',[$bus_in])
         ->get();
         return view('bus.search',compact('bus_data'));
 
