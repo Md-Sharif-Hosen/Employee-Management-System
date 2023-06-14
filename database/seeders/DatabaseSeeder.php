@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AttendenceSeeder::class,
             DepartmentSeeder::class,
-            EmployeeSeeder::class
+            EmployeeSeeder::class,
+            BusSeeder::class,
+            DriverSeeder::class
         ]);
     }
 }

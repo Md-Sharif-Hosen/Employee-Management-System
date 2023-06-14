@@ -98,7 +98,7 @@ class UserController extends Controller
         );
 
 
-        $user_data = User::find(request()->id);
+        $user_data = User::find($id);
         // dd($user_data);
         $user_data->username = request('username');
         $user_data->role_id = request('role_id');
