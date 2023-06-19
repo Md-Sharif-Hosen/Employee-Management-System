@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
-
-<body>
+@include('user.layout.header')
     <div class="container justify-content-center">
         <div class="input-group justify-content-end">
             <form class="my-2" type="get" action="{{ route('user.search') }}">
@@ -24,7 +12,7 @@
                     <h1>User View</h1>
                 </div>
                 <div class="text-end">
-                    <a href="{{ route('user.recycle_bin') }}" class="btn btn-outline-success"><span style="color: rgb(128, 58, 0)"> <-Back</span></a>
+                    <a href="{{ route('user.all') }}" class="btn btn-outline-success"><span style="color: rgb(128, 58, 0)"> <-Back</span></a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-dark">
@@ -58,6 +46,5 @@
         </div>
     </div>
 
-</body>
-
-</html>
+ 
+@include('user.layout.footer')

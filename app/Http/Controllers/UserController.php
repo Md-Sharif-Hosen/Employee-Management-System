@@ -77,28 +77,35 @@ class UserController extends Controller
     {
         //function_body
 
-        $user_edit = User::find($id);
-        $role = UserRole::get();
-        return view('user.edit', compact('user_edit', 'role'));
+        // $user_edit = User::find($id);
+        // $role = UserRole::get();
+        // return view('user.edit', compact('user_edit', 'role'));
+        $user = User::find($id);
+        // $roles = UserRole::get();
+        return response()->json([
+            'status' => 200,
+            'user' => $user
+            // 'roles' => $roles
+        ]);
     }
 
-    public function update($id)
+    public function update(request $request)
     {
         //function_body
-        request()->validate(
-            [
-                'username' => ['required', 'min:4'],
-                'role_id' => ['required'],
-                'email' => ['required', 'min:9', 'email'],
-                'photo' => ['required'],
-                'password' => ['required']
-            ]
+        // request()->validate(
+        //     [
+        //         'username' => ['required', 'min:4'],
+        //         'role_id' => ['required'],
+        //         'email' => ['required', 'min:9', 'email'],
+        //         'photo' => ['required'],
+        //         'password' => ['required']
+        //     ]
 
 
-        );
+        // );
 
-
-        $user_data = User::find($id);
+        $user_id = $request->input('id');
+        $user_data = User::find($user_id);
         // dd($user_data);
         $user_data->username = request('username');
         $user_data->role_id = request('role_id');
@@ -110,17 +117,17 @@ class UserController extends Controller
         }
 
         // $user_data->password = request('password');
-        $user_data->save();
+        $user_data->update();
         return redirect()->back()->with('done', 'User Created Successfully');;
     }
 
     public function delete($id)
     {
         //function_body
-        $user = User::where('id', $id)->first();
+        $user_data= User::where('id', $id)->first();
         // dd($user);
-        $user->status = 0;
-        $user->update();
+        $user_data->status = 0;
+        $user_data->update();
 
         return redirect()->back()->with('Deleted', 'User Deleted successfully');
     }
