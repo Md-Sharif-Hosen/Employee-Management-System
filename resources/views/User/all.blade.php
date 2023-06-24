@@ -41,13 +41,97 @@
             })
         </script>
     @endif
+{{-- user create--}}
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Create User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                    <div class="modal-body">
+                        <div class="form-control">
+                            <label for="">Name</label>
+                            <input class="form-control" type="text" name="username">
+                            @error('username')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-control">
+                            <label for="">User Role</label>
+                            <select class="form-control" value="{{ old('role_id') }}" name="role_id" id="role_id">
+                                <option value="">Select</option>
+                                @foreach (App\Models\UserRole::get() as $item)
+                                    <option value="{{ $item->id }}" {{ old('role_id') == $item->id ? 'selected' :''}}>{{ $item->title }}</option>
+                                @endforeach
+                            </select>
+                            @error('role_id')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-control">
+                            <label for="">Email</label>
+                            <input type="email" value="{{ old('email') }}" class="form-control" name="email">
+                            @error('email')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-control">
+                            <label for="">Status</label>
+                            <input type="number" value="{{ old('email') }}" class="form-control" name="status">
+                            @error('email')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-control">
+                            <label for="">Photo</label>
+                            <input class="form-control" type="file" value="{{ old('photo') }}" accept="image/*"
+                                name="photo">
+                            @error('photo')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-control">
+                            <label for="">Password</label>
+                            <input class="form-control" type="text" value="{{ old('password') }}" name="password">
+                            @error('password')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="col-12">
         <div class="table-responsibe">
             <h1 class="text-center">All User</h1>
             <div class="d-flex justify-content-between">
-
                 <div class="text-start my-2">
-                    <a class="btn btn-outline-info" href="{{ route('user.create') }}">Create</a>
+                    {{-- <a class="btn btn-outline-info" href="{{ route('user.create') }}">Create</a> --}}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        User Create
+                    </button>
                 </div>
                 <div class="text-end my-2">
                     <a class="btn btn-outline-warning " href="{{ route('user.recycle_bin') }}"><span
@@ -62,6 +146,7 @@
                     <th>Email</th>
                     <th>Status</th>
                     <th>Photo</th>
+                    <th>action</th>
 
 
                 </thead>
@@ -83,9 +168,9 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-info" href="{{ route('user.view', $data->id) }}">view</a>
-                                <button type="button" class="btn btn-outline-info edit_btn"
-                                    value="{{ $data->id }}">Edit</button>
+                                {{-- <a class="btn btn-info" href="{{ route('user.view', $data->id) }}">view</a> --}}
+                                <button type="button" class="btn btn-info view-btn" value="{{  $data->id}}">view</button>
+                                <button type="button" class="btn btn-outline-info edit_btn"value="{{ $data->id }}">Edit</button>
                                 <a class="btn btn-danger" onclick="return confirm('Do you want to delete') "
                                     href="{{ route('user.delete', $data->id) }}">Delete</a>
 
@@ -102,14 +187,14 @@
 
 <!--//edit data -->
 @if (session()->get('done'))
-<script>
-    Toast.fire({
-        icon: 'success',
-        title: '{{ session()->get('done') }}'
-    })
-</script>
+    <script>
+        Toast.fire({
+            icon: 'success',
+            title: '{{ session()->get('done') }}'
+        })
+    </script>
 @else
-<h2>Error</h2>
+    <h2>Error</h2>
 @endif
 <!-- Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -135,7 +220,7 @@
                     </div>
                     <div class="form-control">
                         <label for="">User Role</label>
-                        <select class="form-control" value="" name="role_id" id="role_id">
+                        <select class="form-control" value="" name="role_id" id="role_sel">
                             <option value="">Select</option>
                             @foreach (App\Models\UserRole::get() as $item)
                                 <option value="{{ $item->id }}">{{ $item->title }}</option>
@@ -151,6 +236,15 @@
                         <label for="">Email</label>
                         <input type="email" class="form-control" id="email" name="email">
                         @error('email')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-control">
+                        <label for="">Status</label>
+                        <input type="number" class="form-control" id="status_txt" name="status">
+                        @error('number')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
@@ -197,8 +291,9 @@
                     let user = response.user;
                     id.value = user.id;
                     username.value = user.username;
+                    status_txt.value = user.status;
                     email.value = user.email;
-                    role_id.value = user.role_id;
+                    role_sel.value = user.role_id;
                     photo_preview.src = '/' + user.photo;
                     $('#editModal').modal('show');
                 }
@@ -206,5 +301,32 @@
         });
     });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.view_btn', function() {
+            var user_id = $(this).val();
+            // alert(user_id);
+            $.ajax({
+                type: "GET",
+                url: "/user/edit/" + user_id,
+                success: function(response) {
+                    console.log(response);
+                    console.log(response.user);
+                    let user = response.user;
+                    id.value = user.id;
+                    username.value = user.username;
+                    status_txt.value = user.status;
+                    email.value = user.email;
+                    role_sel.value = user.role_id;
+                    photo_preview.src = '/' + user.photo;
+                    $('#editModal').modal('show');
+                }
+            });
+        });
+    });
+</script>
+
 
 @include('user.layout.footer')

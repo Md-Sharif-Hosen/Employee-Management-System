@@ -16,28 +16,33 @@ class UserController extends Controller
     public function create()
     {
         //function_body
-        $encryptedData = Crypt::encrypt('my secret data');
-        $decryptedData = Crypt::decrypt($encryptedData);
-        dd($decryptedData);
-        $role = UserRole::get();
-        return view('user.create', compact('role'));
+        // $encryptedData = Crypt::encrypt('my secret data');
+        // $decryptedData = Crypt::decrypt($encryptedData);
+        // dd($decryptedData);
+        // $role = UserRole::get();
+        // return view('user.create', compact('role'));
+        $role = UserRole::all();
+        return response()->json([
+            'role'=>$role,
+        ]);
+
     }
     public function store(request $request)
     {
         //function_body
         // dd($request->all());
 
-        $request->validate(
-            [
-                'username' => ['required', 'min:4'],
-                'role_id' => ['required'],
-                'email' => ['required', 'min:9', 'email'],
-                'photo' => ['required'],
-                'password' => ['required']
-            ]
+        // $request->validate(
+        //     [
+        //         'username' => ['required', 'min:4'],
+        //         'role_id' => ['required'],
+        //         'email' => ['required', 'min:9', 'email'],
+        //         'photo' => ['required'],
+        //         'password' => ['required']
+        //     ]
 
 
-        );
+        // );
 
         $user_data = User::create($request->except('photo'));
         if ($request->hasFile('photo')) {
@@ -110,6 +115,7 @@ class UserController extends Controller
         $user_data->username = request('username');
         $user_data->role_id = request('role_id');
         $user_data->email = request('email');
+        $user_data->status = request('status');
         # code...
         if (request()->hasFile('photo')) {
 
